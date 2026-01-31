@@ -115,6 +115,27 @@ class _MyCustomFormState extends State<MyCustomForm> {
         ),
 
         Padding(
+        padding: EdgeInsets.all(5),
+        child: Center(
+          child: SizedBox(
+            width: 200,
+            child: ElevatedButton(onPressed: () {
+              setState(() {
+                _nameTextController.clear();
+                _messageTextController.clear();
+              });
+            }, 
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)
+              )
+            ),
+            child: const Text('Reset')),
+          ),
+        ), 
+        ),
+
+        Padding(
           padding: EdgeInsets.all(16),
           child: Center(
             child: SizedBox(
