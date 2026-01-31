@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.green,
         ),
-        body: const MyCustomForm()
+        body: SingleChildScrollView(
+          child: MyCustomForm()) 
       ),
     );
   }
@@ -93,11 +95,17 @@ class _MyCustomFormState extends State<MyCustomForm> {
               width: 200,
               child:ElevatedButton(
               onPressed:() {
-                if(_formKey.currentState !.validate()) {
+                if(_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
+                      width: 300,
+                      behavior: SnackBarBehavior.floating,
+                      showCloseIcon: true,
                       content: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
+                          
                           Text('Name: ${_nameTextController.text}'),
 
                           Text('Message: ${_messageTextController.text}')
