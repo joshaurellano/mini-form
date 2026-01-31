@@ -96,23 +96,9 @@ class _MyCustomFormState extends State<MyCustomForm> {
               child:ElevatedButton(
               onPressed:() {
                 if(_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      width: 300,
-                      behavior: SnackBarBehavior.floating,
-                      showCloseIcon: true,
-                      content: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          
-                          Text('Name: ${_nameTextController.text}'),
-
-                          Text('Message: ${_messageTextController.text}')
-                        ],
-                      )
-                    )
-                  );
+                 setState(() {
+                   
+                 });
                 }
               },
             style: ElevatedButton.styleFrom(
@@ -126,6 +112,32 @@ class _MyCustomFormState extends State<MyCustomForm> {
           ),
             ),
           ),
+        ),
+
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: Center(
+            child: SizedBox(
+              width: double.infinity,
+              height: 300,
+              child: Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                  
+                    children: [
+                        Text('Name: ${_nameTextController.text}'),
+                                
+                        Text('Message: ${_messageTextController.text}')
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        
         )
 
         ]
