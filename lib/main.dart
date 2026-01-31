@@ -9,9 +9,18 @@ class MyApp extends StatelessWidget {
     const String title = 'Mini Form';
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title:title,
       home: Scaffold(
-        appBar: AppBar(title:const Text(title)),
+        appBar: AppBar(
+          title:const Text(title, 
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold
+          ),),
+          centerTitle: true,
+          backgroundColor: Colors.green,
+        ),
         body: const MyCustomForm()
       ),
     );
@@ -79,23 +88,35 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
         Padding(
           padding: EdgeInsets.all(16),
-          child: ElevatedButton(
-            onPressed:() {
-              if(_formKey.currentState !.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Column(
-                      children: [
-                        Text('Name: ${_nameTextController.text}'),
+          child: Center(
+            child: SizedBox(
+              width: 200,
+              child:ElevatedButton(
+              onPressed:() {
+                if(_formKey.currentState !.validate()) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Column(
+                        children: [
+                          Text('Name: ${_nameTextController.text}'),
 
-                        Text('Message: ${_messageTextController.text}')
-                      ],
+                          Text('Message: ${_messageTextController.text}')
+                        ],
+                      )
                     )
-                  )
-                );
-              }
-            },
+                  );
+                }
+              },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)
+              )
+              ),
             child: const Text('Submit'),
+          ),
+            ),
           ),
         )
 
