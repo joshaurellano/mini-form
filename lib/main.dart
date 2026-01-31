@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-
 void main() => runApp(const MyApp());
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Retrieve Text Input',
-      home: MyCustomForm(),
+
+    const String title = 'Mini Form';
+
+    return MaterialApp(
+      title:title,
+      home: Scaffold(
+        appBar: AppBar(title:const Text(title)),
+        body: const MyCustomForm()
+      ),
     );
   }
 }
@@ -19,48 +23,83 @@ class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
 
   @override
-  State<MyCustomForm> createState() => _MyCustomFormState();
+  State<MyCustomForm> createState() {
+    return _MyCustomFormState();
+    }
 }
 
-// Define a corresponding State class.
-// This class holds the data related to the Form.
 class _MyCustomFormState extends State<MyCustomForm> {
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
-  final myController = TextEditingController();
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myController.dispose();
-    super.dispose();
-  }
+  final _formKey = GlobalKey <FormState>();
+  final _nameTextController = TextEditingController();
+  final _messageTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Retrieve Text Input')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: TextField(controller: myController),
-      ),
-      floatingActionButton: FloatingActionButton(
-        // When the user presses the button, show an alert dialog containing
-        // the text that the user has entered into the text field.
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                // Retrieve the text the that user has entered by using the
-                // TextEditingController.
-                content: Text(myController.text),
-              );
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:<Widget> [
+          Padding(padding: EdgeInsets.all(16),
+          child: TextFormField(
+            controller: _nameTextController,
+            decoration: const InputDecoration(
+              border:  OutlineInputBorder(),
+              labelText: 'Enter your Name'
+            ),
+            validator: (value) {
+              if(value == null || value.isEmpty) {
+                return 'Name should not be empty';
+              }
+              return null;
             },
-          );
-        },
-        tooltip: 'Show me the value!',
-        child: const Icon(Icons.text_fields),
+          )
+        ),
+
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: TextFormField(
+            keyboardType: TextInputType.multiline,
+            minLines: 3,
+            maxLines: null,
+            controller: _messageTextController,
+            decoration:const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Enter  your Message'
+            ),
+            validator: (value) {
+              if(value == null || value.isEmpty) {
+                return 'Please enter some  message';
+              }
+              return null;
+            },
+          ),
+        ),
+
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: ElevatedButton(
+            onPressed:() {
+              if(_formKey.currentState !.validate()) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Column(
+                      children: [
+                        Text('Name: ${_nameTextController.text}'),
+
+                        Text('Message: ${_messageTextController.text}')
+                      ],
+                    )
+                  )
+                );
+              }
+            },
+            child: const Text('Submit'),
+          ),
+        )
+
+        ]
       ),
     );
   }
